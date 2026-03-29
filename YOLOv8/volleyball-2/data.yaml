@@ -1,0 +1,15 @@
+names:
+- ball
+- player
+- player 1
+- referee
+nc: 4
+roboflow:
+  license: CC BY 4.0
+  project: volleyball-hwxp2-wq92v
+  url: https://universe.roboflow.com/jeevaraj-s/volleyball-hwxp2-wq92v/dataset/2
+  version: 2
+  workspace: jeevaraj-s
+test: ../test/images
+train: ../train/images
+val: ../valid/images

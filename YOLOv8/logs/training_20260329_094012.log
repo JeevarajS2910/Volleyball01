@@ -1,0 +1,43 @@
+2026-03-29 09:40:12 | Log file → /teamspace/studios/this_studio/Volleyball01/YOLOv8/logs/training_20260329_094012.log
+2026-03-29 09:40:12 | ============================================================
+2026-03-29 09:40:12 |   YOLOv8 Volleyball Detection — GPU Training
+2026-03-29 09:40:12 | ============================================================
+2026-03-29 09:40:12 |   Model      : /teamspace/studios/this_studio/Volleyball01/yolov8n.pt
+2026-03-29 09:40:12 |   Dataset    : /teamspace/studios/this_studio/Volleyball01/YOLOv8/volleyball-2/data.yaml
+2026-03-29 09:40:12 |   Epochs     : 100
+2026-03-29 09:40:12 |   Image size : 640
+2026-03-29 09:40:12 |   Batch size : 4
+2026-03-29 09:40:12 |   Patience   : 50
+2026-03-29 09:40:12 |   Output     : /teamspace/studios/this_studio/Volleyball01/YOLOv8/runs/volleyball_train
+2026-03-29 09:40:12 | ============================================================
+2026-03-29 09:40:12 | Loading model …
+2026-03-29 09:40:12 | Starting training …
+
+2026-03-29 09:51:01 | 
+============================================================
+2026-03-29 09:51:01 |   TRAINING COMPLETE — FINAL METRICS
+2026-03-29 09:51:01 | ============================================================
+2026-03-29 09:51:01 | 
+Metric                                   Value
+2026-03-29 09:51:01 | -----------------------------------------------
+2026-03-29 09:51:01 | metrics/precision(B)                    0.9784
+2026-03-29 09:51:01 | metrics/recall(B)                       0.8454
+2026-03-29 09:51:01 | metrics/mAP50(B)                        0.8961
+2026-03-29 09:51:01 | metrics/mAP50-95(B)                     0.7232
+2026-03-29 09:51:01 | fitness                                 0.7232
+2026-03-29 09:51:01 | 
+📁 Results saved to : /teamspace/studios/this_studio/Volleyball01/YOLOv8/runs/volleyball_train
+2026-03-29 09:51:01 | 📊 Auto-saved charts:
+2026-03-29 09:51:01 |    ✅ results.png
+2026-03-29 09:51:01 |    ✅ confusion_matrix.png
+2026-03-29 09:51:01 |    ✅ confusion_matrix_normalized.png
+2026-03-29 09:51:01 |    — F1_curve.png
+2026-03-29 09:51:01 |    — P_curve.png
+2026-03-29 09:51:01 |    — R_curve.png
+2026-03-29 09:51:01 |    — PR_curve.png
+2026-03-29 09:51:01 |    ✅ labels.jpg
+2026-03-29 09:51:01 |    — labels_correlogram.jpg
+2026-03-29 09:51:01 | 
+🏆 Best weights : /teamspace/studios/this_studio/Volleyball01/YOLOv8/runs/volleyball_train/weights/best.pt
+2026-03-29 09:51:01 |    Last weights : /teamspace/studios/this_studio/Volleyball01/YOLOv8/runs/volleyball_train/weights/last.pt
+2026-03-29 09:51:01 | ============================================================
