@@ -66,6 +66,13 @@ def run_inference():
         sys.exit(1)
 
     print(f"✅ Loading YOLOv7 model from {MODEL_PATH}")
+    
+    # Bypass attempt_download to prevent crash when Git/GitHub API fails
+    import utils.google_utils 
+    import models.experimental
+    utils.google_utils.attempt_download = lambda x: None
+    models.experimental.attempt_download = lambda x: None
+    
     model = attempt_load(MODEL_PATH, map_location=device)
     model.eval()
 

@@ -53,6 +53,13 @@ def run_inference():
     if not os.path.exists(VIDEO_PATH):
         print(f"❌ Video not found at: {VIDEO_PATH}")
         sys.exit(1)
+        
+    # Disable update checks for robustness
+    try:
+        from ultralytics import settings
+        settings.update({'check': False})
+    except Exception:
+        pass
 
     print(f"✅ Loading model from {MODEL_PATH}")
     model = YOLO(MODEL_PATH)
