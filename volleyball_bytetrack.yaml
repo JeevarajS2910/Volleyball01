@@ -1,0 +1,10 @@
+# Custom ByteTrack config for Volleyball Analytics
+# Optimized for consistent player ID tracking in volleyball matches
+
+tracker_type: bytetrack
+track_high_thresh: 0.2     # Lower threshold to keep more detections tracked
+track_low_thresh: 0.05     # Very low second-stage to recover lost players
+new_track_thresh: 0.3      # Higher threshold to avoid creating spurious new tracks
+track_buffer: 90           # 3 seconds at 30fps — keep lost players alive much longer
+match_thresh: 0.85         # Slightly higher IoU threshold for better matching
+fuse_score: True           # Fuse detection confidence with motion for stability
