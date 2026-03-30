@@ -326,6 +326,11 @@ if uploaded or st.button("▶️ Use Sample Video"):
 
     st.info(f"🎞️ {total} frames @ {fps}fps | {W}x{H}")
 
+    # Set up VideoWriter to save the stream
+    output_video_path = "processed_volleyball.mp4"
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(output_video_path, fourcc, fps, (W, H))
+
     # Layout
     st.markdown("## 🎥 Match Analysis")
     frame_ph = st.empty()
@@ -641,15 +646,26 @@ if uploaded or st.button("▶️ Use Sample Video"):
         event_box.markdown("```text\n" + "\n".join(event_log[-20:]) + "\n```")
 
         # Draw video frame
+        out.write(frame)
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_ph.image(frame_rgb, width='stretch')
 
     # ── END ──
     cap.release()
+    out.release()
     if rally_on: rally_hist.append(rally_exch)
 
     st.balloons()
     st.success("✅ Processing complete!")
+    
+    with open(output_video_path, "rb") as video_file:
+        video_bytes = video_file.read()
+    st.download_button(
+        label="📥 Download Processed Video",
+        data=video_bytes,
+        file_name="processed_match.mp4",
+        mime="video/mp4"
+    )
 
     # ════════════════════ FINAL MATCH REPORT ════════════════════
 
