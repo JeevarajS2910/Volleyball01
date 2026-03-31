@@ -1,11 +1,11 @@
 task: detect
 mode: train
 model: /teamspace/studios/this_studio/Volleyball01/yolo11n.pt
-data: /teamspace/studios/this_studio/Volleyball01/YOLOv11/volleyball-2/data.yaml
+data: /teamspace/studios/this_studio/Volleyball01/volleyball.yolov11/data.yaml
 epochs: 100
 time: null
 patience: 50
-batch: 4
+batch: 2
 imgsz: 640
 save: true
 save_period: 10
