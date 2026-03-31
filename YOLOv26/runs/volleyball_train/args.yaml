@@ -1,7 +1,7 @@
 task: detect
 mode: train
-model: c:\Volleyball01\yolo26n.pt
-data: c:\Volleyball01\volleyball.yolo26\data.yaml
+model: /teamspace/studios/this_studio/Volleyball01/yolo26n.pt
+data: /teamspace/studios/this_studio/Volleyball01/volleyball.yolo26/data.yaml
 epochs: 100
 time: null
 patience: 50
@@ -12,7 +12,7 @@ save_period: 10
 cache: false
 device: '0'
 workers: 0
-project: c:\Volleyball01\YOLOv26\runs
+project: /teamspace/studios/this_studio/Volleyball01/YOLOv26/runs
 name: volleyball_train
 exist_ok: true
 pretrained: true
@@ -106,4 +106,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: C:\Volleyball01\YOLOv26\runs\volleyball_train
+save_dir: /teamspace/studios/this_studio/Volleyball01/YOLOv26/runs/volleyball_train

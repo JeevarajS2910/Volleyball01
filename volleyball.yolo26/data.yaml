@@ -6,5 +6,5 @@ names:
 - player 1
 - referee
 nc: 6
-train: c:/Volleyball01/volleyball.yolo26/train/images
-val: c:/Volleyball01/volleyball.yolo26/valid/images
+train: /teamspace/studios/this_studio/Volleyball01/volleyball.yolo26/train/images
+val: /teamspace/studios/this_studio/Volleyball01/volleyball.yolo26/valid/images
