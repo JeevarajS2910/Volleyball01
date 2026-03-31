@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 6
+names: ['1', '2', 'ball', 'player', 'player 1', 'referee']
+
+roboflow:
+  workspace: jeevaraj-s
+  project: jeevaraj-s
+  version: dataset
+  license: Private
+  url: https://app.roboflow.com/jeevaraj-s/jeevaraj-s/dataset
