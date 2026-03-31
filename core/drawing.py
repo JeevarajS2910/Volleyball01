@@ -334,38 +334,52 @@ def draw_court_overlay(frame, players, ball_c, setter_spiker_arrow=None, setter_
     """Draw tactical mini-court with setter→spiker arrows."""
     H, W = frame.shape[:2]
 
-    court_w, court_h = 460, 220
+    court_w, court_h = 300, 140
     x0 = (W - court_w) // 2
     y0 = H - court_h - 15
 
     overlay = frame.copy()
 
-    # Court background
-    cv2.rectangle(overlay, (x0, y0), (x0 + court_w, y0 + court_h), (30, 30, 50), -1)
-    half_w = (court_w - 40) // 2
-    cv2.rectangle(overlay, (x0 + 20, y0 + 20), (x0 + 20 + half_w, y0 + court_h - 20), (40, 120, 180), -1)
-    cv2.rectangle(overlay, (x0 + 20 + half_w, y0 + 20), (x0 + court_w - 20, y0 + court_h - 20), (35, 100, 160), -1)
+    # Court background (Dark Green)
+    cv2.rectangle(overlay, (x0, y0), (x0 + court_w, y0 + court_h), (50, 80, 50), -1)
+    
+    # Margin for actual play area
+    m_x, m_y = int(court_w * 0.043), int(court_h * 0.09)
+    
+    half_w = (court_w - m_x * 2) // 2
+    # Left Half Court (Vibrant Green)
+    cv2.rectangle(overlay, (x0 + m_x, y0 + m_y), (x0 + m_x + half_w, y0 + court_h - m_y), (60, 180, 80), -1)
+    # Right Half Court (Slightly darker Green)
+    cv2.rectangle(overlay, (x0 + m_x + half_w, y0 + m_y), (x0 + court_w - m_x, y0 + court_h - m_y), (50, 160, 70), -1)
+    # Court outline
     cv2.rectangle(overlay, (x0, y0), (x0 + court_w, y0 + court_h), WHITE, 2)
 
-    lane_h = (court_h - 40) // 3
+    lane_h = (court_h - m_y * 2) // 3
     for i in range(1, 3):
-        cv2.line(overlay, (x0 + 20, y0 + 20 + i * lane_h),
-                 (x0 + court_w - 20, y0 + 20 + i * lane_h), (180, 180, 200), 1)
+        cv2.line(overlay, (x0 + m_x, y0 + m_y + i * lane_h),
+                 (x0 + court_w - m_x, y0 + m_y + i * lane_h), (180, 180, 200), 1)
 
     frame = cv2.addWeighted(overlay, 0.8, frame, 0.2, 0)
 
     # Net and attack lines
     net_x = x0 + court_w // 2
-    cv2.line(frame, (net_x, y0 + 20), (net_x, y0 + court_h - 20), WHITE, 3)
-    cv2.line(frame, (net_x - 60, y0 + 20), (net_x - 60, y0 + court_h - 20), (200, 200, 220), 1)
-    cv2.line(frame, (net_x + 60, y0 + 20), (net_x + 60, y0 + court_h - 20), (200, 200, 220), 1)
+    attack_off = int(court_w * 0.13)
+    cv2.line(frame, (net_x, y0 + m_y), (net_x, y0 + court_h - m_y), WHITE, 3)
+    cv2.line(frame, (net_x - attack_off, y0 + m_y), (net_x - attack_off, y0 + court_h - m_y), (200, 200, 220), 1)
+    cv2.line(frame, (net_x + attack_off, y0 + m_y), (net_x + attack_off, y0 + court_h - m_y), (200, 200, 220), 1)
 
-    # Zone labels
+    # Zone labels (proportional sizing)
+    x_off1 = int(court_w * (50 / 460))
+    x_off2 = int(court_w * (150 / 460))
+    y_off1 = int(court_h * (55 / 220))
+    y_off2 = court_h // 2
+    y_off3 = court_h - y_off1
+
     for z, (zx, zy) in {
-        4: (x0 + 50, y0 + 55), 3: (x0 + 50, y0 + court_h // 2),
-        2: (x0 + 50, y0 + court_h - 55),
-        5: (x0 + 150, y0 + 55), 6: (x0 + 150, y0 + court_h // 2),
-        1: (x0 + 150, y0 + court_h - 55),
+        4: (x0 + x_off1, y0 + y_off1), 3: (x0 + x_off1, y0 + y_off2),
+        2: (x0 + x_off1, y0 + y_off3),
+        5: (x0 + x_off2, y0 + y_off1), 6: (x0 + x_off2, y0 + y_off2),
+        1: (x0 + x_off2, y0 + y_off3),
     }.items():
         cv2.putText(frame, str(z), (zx, zy), cv2.FONT_HERSHEY_SIMPLEX, 0.3, (100, 100, 130), 1)
 
@@ -381,23 +395,23 @@ def draw_court_overlay(frame, players, ball_c, setter_spiker_arrow=None, setter_
         c = box_center(pb)
         mx, my = map_xy(c[0], c[1])
         color = TEAM_1_COLOR if cid in TEAM_1_CLASS_IDS else TEAM_2_COLOR
-        cv2.circle(frame, (mx, my), 7, WHITE, -1)
-        cv2.circle(frame, (mx, my), 5, color, -1)
+        cv2.circle(frame, (mx, my), 5, WHITE, -1)
+        cv2.circle(frame, (mx, my), 3, color, -1)
         # Player ID
-        cv2.putText(frame, str(sid), (mx - 4, my + 3),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.25, WHITE, 1)
+        cv2.putText(frame, str(sid), (mx - 3, my + 2),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.2, WHITE, 1)
         # Action label on mini-court
         plbl = player_labels.get(sid, "")
         if plbl:
             lbl_color = ACTION_COLORS.get(plbl, (0, 255, 255))
-            cv2.putText(frame, plbl, (mx - 12, my - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.25, lbl_color, 1, cv2.LINE_AA)
+            cv2.putText(frame, plbl, (mx - 8, my - 6),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.2, lbl_color, 1, cv2.LINE_AA)
 
     # Ball
     if ball_c:
         mx, my = map_xy(ball_c[0], ball_c[1])
-        cv2.circle(frame, (mx, my), 5, BLACK, -1)
-        cv2.circle(frame, (mx, my), 4, (0, 255, 255), -1)
+        cv2.circle(frame, (mx, my), 4, BLACK, -1)
+        cv2.circle(frame, (mx, my), 3, (0, 255, 255), -1)
 
     # ── SETTER → SPIKER ARROW on mini-court ──
     if setter_spiker_arrow and setter_spiker_timer > 0:
@@ -406,15 +420,16 @@ def draw_court_overlay(frame, players, ball_c, setter_spiker_arrow=None, setter_
         e_mx, e_my = map_xy(ep[0], ep[1])
         # Bright cyan arrow from setter to spiker
         cv2.arrowedLine(frame, (s_mx, s_my), (e_mx, e_my),
-                        (0, 255, 255), 3, tipLength=0.15, line_type=cv2.LINE_AA)
+                        (0, 255, 255), 2, tipLength=0.15, line_type=cv2.LINE_AA)
         # Label "SET→SPIKE"
         mid_x = (s_mx + e_mx) // 2
-        mid_y = (s_my + e_my) // 2 - 8
-        cv2.putText(frame, "SET>SPIKE", (mid_x - 25, mid_y),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.28, (0, 255, 255), 1, cv2.LINE_AA)
+        mid_y = (s_my + e_my) // 2 - 6
+        cv2.putText(frame, "SET>SPIKE", (mid_x - 18, mid_y),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.22, (0, 255, 255), 1, cv2.LINE_AA)
 
     # Title
     cv2.putText(frame, "TACTICAL MAP", (x0 + 5, y0 - 4),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.4, (180, 180, 200), 1, cv2.LINE_AA)
+                cv2.FONT_HERSHEY_SIMPLEX, 0.35, (180, 180, 200), 1, cv2.LINE_AA)
 
     return frame
+
