@@ -96,8 +96,11 @@ def create_data_yaml(base_dir: str):
 
 def train():
     """Train the YOLOv26 model."""
-    base_dir = r"c:\Volleyball01\volleyball.yolo26"
-    weights = r"c:\Volleyball01\yolo26n.pt"
+    # Dynamically resolve paths to support both local Windows and Lightning AI (Linux)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.join(script_dir, "volleyball.yolo26")
+    weights = os.path.join(script_dir, "yolo26n.pt")
+    project_dir = os.path.join(script_dir, "YOLOv26", "runs")
 
     # Step 1: Split dataset
     print("=" * 60)
@@ -128,7 +131,7 @@ def train():
         epochs=100,
         imgsz=640,
         batch=2,
-        project=r"c:\Volleyball01\YOLOv26\runs",
+        project=project_dir,
         name="volleyball_train",
         device=0,
         exist_ok=True,
